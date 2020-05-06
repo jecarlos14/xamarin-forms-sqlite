@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:SQLite.ViewModels"
+             mc:Ignorable="d"
+             x:Name="mainPage"
+             x:Class="SQLite.MainPage">
+    <ContentPage.BindingContext>
+        <viewModels:MainPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Text="Cédula:" />
+        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Person.IdCard}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Text="Nombre:" />
+        <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Person.Name}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start"/>
+
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Guardar" Command="{Binding SavePersonCommand}" HorizontalOptions="CenterAndExpand"/>
+        
+        <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Persons}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding IdCard}" Detail="{Binding Name}" Command="{Binding Path=BindingContext.SelectPersonCommand, Source={x:Reference mainPage}}" CommandParameter="{Binding .}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+
+</ContentPage>
